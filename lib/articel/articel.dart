@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+
+class Article extends StatefulWidget {
+  @override
+  _ArticleState createState() => _ArticleState();
+}
+
+class _ArticleState extends State<Article> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: SafeArea(
+        child: Container(
+          child: Text("Hi"),
+        ),
+      ),
+    );
+  }
+}
