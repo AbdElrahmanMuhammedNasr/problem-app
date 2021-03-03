@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
-import 'package:flutter_main_app/articel/articel.dart';
+import 'package:flutter_main_app/article/article.dart';
+import 'package:flutter_main_app/author/author.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -88,7 +89,23 @@ class _HomePageState extends State<HomePage> {
 
 // ignore: non_constant_identifier_names
 Widget main_bar(context) {
-  String _search;
+  List<String> categories = [
+    'money',
+    'marr',
+    'kid',
+    'family',
+    'work',
+    'money',
+    'marr',
+    'kid',
+    'family',
+    'work',
+    'money',
+    'marr',
+    'kid',
+    'family',
+    'work'
+  ];
   return Container(
       color: new ShareColors().bluegrayColor,
       width: MediaQuery.of(context).size.width,
@@ -131,22 +148,12 @@ Widget main_bar(context) {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(1),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(1),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "  Search",
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                  onSaved: (val) {
-                    _search = val;
-                  },
+              height: 40,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(
+                  categories.length,
+                  (index) => category(categories[index]),
                 ),
               ),
             ),
@@ -154,6 +161,28 @@ Widget main_bar(context) {
         ],
       ));
 }
+
+/////////////////////////////////////////////
+Widget category(name) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 5),
+    child: (Container(
+      decoration: BoxDecoration(
+          color: Colors.black12, borderRadius: BorderRadius.circular(10)),
+      width: 70,
+      child: Center(
+        child: Text(
+          "#${name}",
+          style: TextStyle(
+            color: new ShareColors().whiteColor,
+            fontSize: 15,
+          ),
+        ),
+      ),
+    )),
+  );
+}
+/////////////////////////////////////////////////////
 
 ////////////////////// part two the artical ////////////////
 // ignore: non_constant_identifier_names
@@ -171,11 +200,13 @@ Widget article(context, articelData) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("${articelData['name']}",
-                style: TextStyle(
-                  color: new ShareColors().whiteColor,
-                  fontSize: 20,
-                )),
+            Text(
+              "${articelData['name']}",
+              style: TextStyle(
+                color: new ShareColors().whiteColor,
+                fontSize: 20,
+              ),
+            ),
             SizedBox(
               height: 7,
             ),
@@ -207,6 +238,8 @@ Widget article(context, articelData) {
                   color: new ShareColors().lightbluegrayColor,
                   onPressed: () {
                     print("go tot author " + articelData['id']);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => new Author()));
                   },
                 ),
                 FlatButton(
@@ -227,3 +260,27 @@ Widget article(context, articelData) {
     )),
   );
 }
+
+// Padding(
+//             padding: EdgeInsets.symmetric(horizontal: 5),
+//             child: Container(
+//               decoration: BoxDecoration(
+//                 color: Colors.black12,
+//                 borderRadius: BorderRadius.circular(1),
+//               ),
+//               child: Padding(
+//                 padding: EdgeInsets.all(1),
+//                 child: TextFormField(
+//                   keyboardType: TextInputType.number,
+//                   decoration: InputDecoration(
+//                     hintText: "  Search",
+//                     border: InputBorder.none,
+//                     prefixIcon: Icon(Icons.search),
+//                   ),
+//                   onSaved: (val) {
+//                     _search = val;
+//                   },
+//                 ),
+//               ),
+//             ),
+// ),
