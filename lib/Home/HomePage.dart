@@ -164,22 +164,27 @@ Widget main_bar(context) {
 
 /////////////////////////////////////////////
 Widget category(name) {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 5),
-    child: (Container(
-      decoration: BoxDecoration(
-          color: Colors.black12, borderRadius: BorderRadius.circular(10)),
-      width: 70,
-      child: Center(
-        child: Text(
-          "#${name}",
-          style: TextStyle(
-            color: new ShareColors().whiteColor,
-            fontSize: 15,
+  return InkWell(
+    onTap: () {
+      print(name);
+    },
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      child: (Container(
+        decoration: BoxDecoration(
+            color: Colors.black12, borderRadius: BorderRadius.circular(10)),
+        width: 70,
+        child: Center(
+          child: Text(
+            "#${name}",
+            style: TextStyle(
+              color: new ShareColors().whiteColor,
+              fontSize: 15,
+            ),
           ),
         ),
-      ),
-    )),
+      )),
+    ),
   );
 }
 /////////////////////////////////////////////////////
