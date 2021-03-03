@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/addPost/add.dart';
 import 'package:flutter_main_app/article/article.dart';
 import 'package:flutter_main_app/author/author.dart';
 
@@ -139,6 +140,7 @@ Widget main_bar(context) {
                       tooltip: 'Add new Experiment',
                       color: new ShareColors().blueColor,
                       onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> new Add()));
                         print("add");
                       })
                 ],
