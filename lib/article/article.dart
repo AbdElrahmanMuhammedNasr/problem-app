@@ -30,7 +30,7 @@ Widget user(context) {
       color: new ShareColors().bluegrayColor,
     ),
     child: Padding(
-        padding: EdgeInsets.all(1),
+        padding: EdgeInsets.all(0),
         child: Column(
           children: [
             ListTile(
@@ -60,6 +60,30 @@ Widget article(context) {
         padding: EdgeInsets.symmetric(vertical: 0),
         child: Image.asset('./images/2.jpeg'),
       ),
+
+// add post category
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.blue.shade700,
+            borderRadius: BorderRadius.circular(7),
+          ),
+          width: 70,
+          height: 35,
+          child: Center(
+            child: Text(
+              "#Work",
+              style: TextStyle(
+                color: new ShareColors().whiteColor,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+      // end post category
+
       Padding(
         padding: EdgeInsets.all(10),
         child: Text(

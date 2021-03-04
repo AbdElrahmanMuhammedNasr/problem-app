@@ -26,9 +26,12 @@ class _AddState extends State<Add> {
                     SizedBox(
                       height: 35,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Text("Choose post Category"),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 20, left: 5),
+                        child: Text("post Category"),
+                      ),
                     ),
                     Container(
                         height: 50,
