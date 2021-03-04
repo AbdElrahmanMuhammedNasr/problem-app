@@ -3,6 +3,7 @@ import 'package:flutter_main_app/Color/color.dart';
 import 'package:flutter_main_app/addPost/add.dart';
 import 'package:flutter_main_app/article/article.dart';
 import 'package:flutter_main_app/author/author.dart';
+import 'package:flutter_main_app/sharedWidget/category.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -90,23 +91,7 @@ class _HomePageState extends State<HomePage> {
 
 // ignore: non_constant_identifier_names
 Widget main_bar(context) {
-  List<String> categories = [
-    'money',
-    'marr',
-    'kid',
-    'family',
-    'work',
-    'money',
-    'marr',
-    'kid',
-    'family',
-    'work',
-    'money',
-    'marr',
-    'kid',
-    'family',
-    'work'
-  ];
+
   return Container(
       color: new ShareColors().bluegrayColor,
       width: MediaQuery.of(context).size.width,
@@ -151,45 +136,15 @@ Widget main_bar(context) {
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: Container(
               height: 40,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: List.generate(
-                  categories.length,
-                  (index) => category(categories[index]),
-                ),
-              ),
+              // sheard category
+              child: new Category()
+              // end
             ),
           ),
         ],
       ));
 }
 
-/////////////////////////////////////////////
-Widget category(name) {
-  return InkWell(
-    onTap: () {
-      print(name);
-    },
-    child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      child: (Container(
-        decoration: BoxDecoration(
-            color: Colors.black12, borderRadius: BorderRadius.circular(10)),
-        width: 70,
-        child: Center(
-          child: Text(
-            "#${name}",
-            style: TextStyle(
-              color: new ShareColors().whiteColor,
-              fontSize: 15,
-            ),
-          ),
-        ),
-      )),
-    ),
-  );
-}
-/////////////////////////////////////////////////////
 
 ////////////////////// part two the artical ////////////////
 // ignore: non_constant_identifier_names

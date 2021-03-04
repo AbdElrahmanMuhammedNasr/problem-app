@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/sharedWidget/category.dart';
 
 class Add extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _AddState extends State<Add> {
       child: SafeArea(
         child: SingleChildScrollView(
           child: Container(
+            color: new ShareColors().bluegrayColor,
             child: Form(
               key: _formKey,
               child: Container(
@@ -21,17 +23,20 @@ class _AddState extends State<Add> {
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    DropdownButton<String>(
-                      items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (_) {},
-                    ),
                     SizedBox(
-                      height: 50,
+                      height: 35,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Text("Choose post Category"),
+                    ),
+                    Container(
+                        height: 50,
+                        //  this is shared category
+                        child: new Category()),
+                    // end
+                    SizedBox(
+                      height: 35,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -51,7 +56,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 35,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -71,7 +76,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 35,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -92,9 +97,9 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 35,
                     ),
-                      Container(
+                    Container(
                       decoration: BoxDecoration(
                           color: Colors.black12,
                           borderRadius: BorderRadius.circular(3),
@@ -113,15 +118,17 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 35,
                     ),
                     Container(
                       child: FlatButton(
+                          minWidth: MediaQuery.of(context).size.width,
+                          // height: 200,
                           color: new ShareColors().blueColor,
                           onPressed: () {
                             print('add');
                           },
-                          child: Text('Add')),
+                          child: Text('Post')),
                     )
                   ],
                 ),
