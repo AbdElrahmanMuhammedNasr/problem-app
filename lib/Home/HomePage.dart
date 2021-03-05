@@ -13,9 +13,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> articles = [
     {
-      "name": 'management Money',
+      "name": 'ادراه الوثت',
       "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
+      "snap": "مشكله اداره الوثت وحل المسشكه",
       "id": "ojfkdjfkdj",
     },
     {
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: articles.map((e) => article(context, e)).toList(),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -91,7 +91,6 @@ class _HomePageState extends State<HomePage> {
 
 // ignore: non_constant_identifier_names
 Widget main_bar(context) {
-
   return Container(
       color: new ShareColors().bluegrayColor,
       width: MediaQuery.of(context).size.width,
@@ -119,15 +118,32 @@ Widget main_bar(context) {
                   //   color: new ShareColors().blueColor,
                   // )
 
-                  IconButton(
-                      icon: Icon(Icons.add),
-                      iconSize: 30,
-                      tooltip: 'Add new Experiment',
-                      color: new ShareColors().blueColor,
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> new Add()));
-                        print("add");
-                      })
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.add),
+                          iconSize: 30,
+                          tooltip: 'Add new Experiment',
+                          color: new ShareColors().blueColor,
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => new Add()));
+                            print("add");
+                          }),
+                      IconButton(
+                          icon: Icon(Icons.person_sharp),
+                          iconSize: 30,
+                          tooltip: 'Go to profile',
+                          color: new ShareColors().blueColor,
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => new Author(
+                                      id: "fdkfjdkfjdkfjkdj",
+                                    )));
+                            print("add");
+                          })
+                    ],
+                  )
                 ],
               ),
             ),
@@ -135,20 +151,21 @@ Widget main_bar(context) {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: Container(
-              height: 40,
-              // sheard category
-              child: new Category()
-              // end
-            ),
+                height: 40,
+                // sheard category
+                child: new Category()
+                // end
+                ),
           ),
         ],
       ));
 }
 
-
 ////////////////////// part two the artical ////////////////
 // ignore: non_constant_identifier_names
 Widget article(context, articelData) {
+  Object _textAlign = Alignment.centerLeft;
+
   return Padding(
     padding: EdgeInsets.all(3),
     child: (Container(
@@ -162,29 +179,38 @@ Widget article(context, articelData) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${articelData['name']}",
-              style: TextStyle(
-                color: new ShareColors().whiteColor,
-                fontSize: 20,
+            Align(
+              alignment: _textAlign,
+              child: Text(
+                "${articelData['name']}",
+                style: TextStyle(
+                  color: new ShareColors().whiteColor,
+                  fontSize: 20,
+                ),
               ),
             ),
             SizedBox(
               height: 7,
             ),
-            Text("${articelData['time']}",
-                style: TextStyle(
-                  color: new ShareColors().grayColor,
-                  fontSize: 10,
-                )),
+            Align(
+              alignment: _textAlign,
+              child: Text("${articelData['time']}",
+                  style: TextStyle(
+                    color: new ShareColors().grayColor,
+                    fontSize: 10,
+                  )),
+            ),
             SizedBox(
               height: 7,
             ),
-            Text(
-              "${articelData['snap']}",
-              style: TextStyle(
-                color: new ShareColors().whiteColor,
-                fontSize: 15,
+            Align(
+              alignment: _textAlign,
+              child: Text(
+                "${articelData['snap']}",
+                style: TextStyle(
+                  color: new ShareColors().whiteColor,
+                  fontSize: 15,
+                ),
               ),
             ),
             SizedBox(
@@ -195,17 +221,19 @@ Widget article(context, articelData) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FlatButton(
-                  child: Text("Go to author"),
+                  child: Text( _textAlign == Alignment.centerLeft ?"Go to author" : " الي صفحه الناشر"),
                   textColor: Colors.white,
                   color: new ShareColors().lightbluegrayColor,
                   onPressed: () {
                     print("go tot author " + articelData['id']);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => new Author()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => new Author(
+                              id: "tkjkjgfkjgfkjgkfjgf",
+                            )));
                   },
                 ),
                 FlatButton(
-                  child: Text("Read more"),
+                  child: Text( _textAlign == Alignment.centerLeft ?"Read More" : "اقرا المقال"),
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {

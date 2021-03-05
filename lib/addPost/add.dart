@@ -9,6 +9,9 @@ class Add extends StatefulWidget {
 
 class _AddState extends State<Add> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Object _textAlign = TextAlign.left;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -30,7 +33,12 @@ class _AddState extends State<Add> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 20, left: 5),
-                        child: Text("post Category"),
+                        child: Text(
+                          _textAlign == TextAlign.left
+                              ? "Post Category"
+                              : "تصنيف المشكله",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Container(
@@ -50,8 +58,11 @@ class _AddState extends State<Add> {
                       child: Padding(
                         padding: EdgeInsets.all(5),
                         child: TextFormField(
+                          textAlign: _textAlign,
                           decoration: InputDecoration(
-                            hintText: "  Title",
+                            hintText: _textAlign == TextAlign.left
+                                ? "  Title"
+                                : "عنوان",
                             border: InputBorder.none,
                           ),
                           onSaved: (val) {},
@@ -70,8 +81,11 @@ class _AddState extends State<Add> {
                       child: Padding(
                         padding: EdgeInsets.all(5),
                         child: TextFormField(
+                          textAlign: _textAlign,
                           decoration: InputDecoration(
-                            hintText: "  snapShot",
+                            hintText: _textAlign == TextAlign.left
+                                ? "  snapshot"
+                                : "وصف المشكله",
                             border: InputBorder.none,
                           ),
                           onSaved: (val) {},
@@ -90,9 +104,12 @@ class _AddState extends State<Add> {
                       child: Padding(
                         padding: EdgeInsets.all(5),
                         child: TextFormField(
+                          textAlign: _textAlign,
                           maxLines: 10,
                           decoration: InputDecoration(
-                            hintText: "  problem",
+                            hintText: _textAlign == TextAlign.left
+                                ? "  problem"
+                                : "اكتب المشكله",
                             border: InputBorder.none,
                           ),
                           onSaved: (val) {},
@@ -111,9 +128,12 @@ class _AddState extends State<Add> {
                       child: Padding(
                         padding: EdgeInsets.all(5),
                         child: TextFormField(
+                          textAlign: _textAlign,
                           maxLines: 10,
                           decoration: InputDecoration(
-                            hintText: "  Solution",
+                            hintText: _textAlign == TextAlign.left
+                                ? "  Solution"
+                                : "الحل",
                             border: InputBorder.none,
                           ),
                           onSaved: (val) {},
@@ -126,13 +146,18 @@ class _AddState extends State<Add> {
                     Container(
                       child: FlatButton(
                           minWidth: MediaQuery.of(context).size.width,
+                          height: 60,
                           // height: 200,
                           color: new ShareColors().blueColor,
                           onPressed: () {
                             print('add');
                           },
-                          child: Text('Post')),
-                    )
+                          child: Text(
+                              _textAlign == TextAlign.left ? 'Post' : "نشر ")),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
                   ],
                 ),
               ),

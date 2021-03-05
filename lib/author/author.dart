@@ -3,6 +3,10 @@ import 'package:flutter_main_app/Color/color.dart';
 import 'package:flutter_main_app/article/article.dart';
 
 class Author extends StatefulWidget {
+
+  String id ;
+  Author({this.id});
+
   @override
   _AuthorState createState() => _AuthorState();
 }
