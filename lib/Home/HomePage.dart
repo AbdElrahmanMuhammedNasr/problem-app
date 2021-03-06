@@ -80,6 +80,15 @@ class _HomePageState extends State<HomePage> {
                 children: articles.map((e) => article(context, e)).toList(),
               ),
             ),
+            FlatButton(
+              minWidth: MediaQuery.of(context).size.width /2,
+              textColor: Colors.white,
+              color: Colors.blue,
+              onPressed: () {
+                print('more');
+              },
+              child: Text('More'),
+            )
           ],
         ),
       ),
@@ -221,7 +230,9 @@ Widget article(context, articelData) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FlatButton(
-                  child: Text( _textAlign == Alignment.centerLeft ?"Go to author" : " الي صفحه الناشر"),
+                  child: Text(_textAlign == Alignment.centerLeft
+                      ? "Go to author"
+                      : " الي صفحه الناشر"),
                   textColor: Colors.white,
                   color: new ShareColors().lightbluegrayColor,
                   onPressed: () {
@@ -233,7 +244,9 @@ Widget article(context, articelData) {
                   },
                 ),
                 FlatButton(
-                  child: Text( _textAlign == Alignment.centerLeft ?"Read More" : "اقرا المقال"),
+                  child: Text(_textAlign == Alignment.centerLeft
+                      ? "Read More"
+                      : "اقرا المقال"),
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {

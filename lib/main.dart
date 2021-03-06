@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_main_app/Auth/signup.dart';
 import 'package:flutter_main_app/Color/color.dart';
 
 import 'package:flutter_main_app/Home/HomePage.dart';
@@ -29,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         body: SafeArea(
           child: Container(
-            child: new HomePage(),
+            child: new SignUp(),
           ),
         ),
       ),
