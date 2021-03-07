@@ -70,28 +70,32 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            main_bar(context),
-            Container(
-              child: Column(
-                children: articles.map((e) => article(context, e)).toList(),
-              ),
+    return Material(
+          child: SafeArea(
+                      child: Container(
+        child: SingleChildScrollView(
+            child: Column(
+              children: [
+                main_bar(context),
+                Container(
+                  child: Column(
+                    children: articles.map((e) => article(context, e)).toList(),
+                  ),
+                ),
+                FlatButton(
+                  minWidth: MediaQuery.of(context).size.width /2,
+                  textColor: Colors.white,
+                  color: Colors.blue,
+                  onPressed: () {
+                    print('more');
+                  },
+                  child: Text('More'),
+                )
+              ],
             ),
-            FlatButton(
-              minWidth: MediaQuery.of(context).size.width /2,
-              textColor: Colors.white,
-              color: Colors.blue,
-              onPressed: () {
-                print('more');
-              },
-              child: Text('More'),
-            )
-          ],
         ),
       ),
+          ),
     );
   }
 }
