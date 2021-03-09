@@ -200,7 +200,7 @@ Widget article(context, articelData) {
                   textColor: Colors.white,
                   color: new ShareColors().lightbluegrayColor,
                   onPressed: () {
-                    print("go tot author " + articelData['userId']);
+                    // print("go tot author " + articelData['userId']);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => new Author(
                               id: articelData['userId'],
@@ -214,7 +214,7 @@ Widget article(context, articelData) {
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {
-                    print("read more " + articelData['_id']);
+                    // print("read more " + articelData['_id']);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => new Article(id: articelData['_id'] ,)));
                   },

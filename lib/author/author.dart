@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
 import 'package:flutter_main_app/article/article.dart';
+import 'package:flutter_main_app/author/AuthorService.dart';
 
 class Author extends StatefulWidget {
-
-  String id ;
+  String id;
   Author({this.id});
 
   @override
@@ -12,76 +12,92 @@ class Author extends StatefulWidget {
 }
 
 class _AuthorState extends State<Author> {
-  List<Map<String, dynamic>> authorArticle = [
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    }
-  ];
+  Object userData;
+  List userPosts;
+
+  initUserData() async {
+    var data = await new AutherService().getOneUser(widget.id);
+    setState(() {
+      userData = data;
+    });
+  }
+
+  initUserPosts() async {
+    var data = await new AutherService().getUserPosts(widget.id);
+    setState(() {
+      userPosts = data;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initUserData();
+    initUserPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                user(context),
-                Container(
-                  child: Column(
-                    children:
-                        authorArticle.map((e) => article(context, e)).toList(),
-                  ),
-                )
-              ],
+    return Scaffold(
+          body: Material(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Center(
+                          child: Container(
+                child: Column(
+                  children: [
+                    userData == null
+                        ? CircularProgressIndicator()
+                        : user(context, userData),
+                    // ///////////////////////////////////////////
+                    userPosts == null
+                        ? Text("")
+                        : Column(
+                            children: [
+                              Text(
+                                "${userPosts.length}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23),
+                              ),
+                              Text("Posts",
+                                  style:
+                                      TextStyle(color: new ShareColors().grayColor))
+                            ],
+                          ),
+                    // ///////////////////////////////////////////
+
+                    userPosts == null
+                        ? CircularProgressIndicator()
+                        : Container(
+                            child: Column(
+                              children: userPosts
+                                  .map((e) => article(context, e))
+                                  .toList(),
+                            ),
+                          )
+                  ],
+                ),
+              ),
             ),
           ),
         ),
+        
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: new ShareColors().blueColor,
+        foregroundColor: new ShareColors().whiteColor,
+        child: Icon(Icons.settings),
+        onPressed: (){
+          print("object");
+        },
+        ),
+        bottomNavigationBar: BottomAppBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
 
-Widget user(context) {
+Widget user(context, userData) {
   return Container(
     decoration: BoxDecoration(
       color: new ShareColors().bluegrayColor,
@@ -91,14 +107,16 @@ Widget user(context) {
         child: Column(
           children: [
             ListTile(
-              title: Text("Mohamed Tamer"),
-              subtitle: Text("lifestyle coash"),
+              title: Text("${userData['name']}"),
+              subtitle: Text("${userData['description']}"),
               leading: CircleAvatar(
                 radius: 30,
                 backgroundImage: AssetImage('images/3.jpeg'),
               ),
               trailing: FlatButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  print('follow');
+                },
                 icon: Icon(Icons.person_add),
                 label: Text("Follow"),
                 color: new ShareColors().blueColor,
@@ -115,8 +133,9 @@ Widget user(context) {
                     Column(
                       children: [
                         Text(
-                          "200",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          "${userData['following']}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         Text("Following",
                             style:
@@ -126,8 +145,9 @@ Widget user(context) {
                     Column(
                       children: [
                         Text(
-                          "2000",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          "${userData['followers']}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         Text("Followers",
                             style:
@@ -161,7 +181,7 @@ Widget article(context, articelData) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${articelData['name']}",
+              "${articelData['title']}",
               style: TextStyle(
                 color: new ShareColors().whiteColor,
                 fontSize: 20,
@@ -170,7 +190,7 @@ Widget article(context, articelData) {
             SizedBox(
               height: 7,
             ),
-            Text("${articelData['time']}",
+            Text("${articelData['created']}",
                 style: TextStyle(
                   color: new ShareColors().grayColor,
                   fontSize: 10,
@@ -179,7 +199,7 @@ Widget article(context, articelData) {
               height: 7,
             ),
             Text(
-              "${articelData['snap']}",
+              "${articelData['description']}",
               style: TextStyle(
                 color: new ShareColors().whiteColor,
                 fontSize: 15,
@@ -189,7 +209,7 @@ Widget article(context, articelData) {
               height: 7,
             ),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 FlatButton(
@@ -197,9 +217,13 @@ Widget article(context, articelData) {
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {
-                    print("read more " + articelData['id']);
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => new Article()));
+                      MaterialPageRoute(
+                        builder: (context) => new Article(
+                          id: articelData['_id'],
+                        ),
+                      ),
+                    );
                   },
                 )
               ],

@@ -19,7 +19,6 @@ class _ArticleState extends State<Article> {
       articleData = data;
     });
 
-    print(data);
   }
 
   @override
@@ -34,7 +33,7 @@ class _ArticleState extends State<Article> {
       child: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            child: articleData == null ? Center(child: CircularProgressIndicator() ,):Column(
+            child: articleData == null ? Center(child: CircularProgressIndicator(),):Column(
               children: [
                 user(context, articleData),
                 article(context, articleData),

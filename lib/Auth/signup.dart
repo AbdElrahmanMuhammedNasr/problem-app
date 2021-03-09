@@ -117,6 +117,30 @@ class _SignUpState extends State<SignUp> {
                           SizedBox(
                             height: 35,
                           ),
+                            Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(3),
+                              border: Border.all(
+                                  color: new ShareColors().lightbluegrayColor),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: TextFormField(
+                                textAlign: _textAlign,
+                                decoration: InputDecoration(
+                                  hintText: _textAlign == TextAlign.left
+                                      ? "description"
+                                      : "وصف لك",
+                                  border: InputBorder.none,
+                                ),
+                                onSaved: (val) {},
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 35,
+                          ),
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.black12,
