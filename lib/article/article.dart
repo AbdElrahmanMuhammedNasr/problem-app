@@ -1,20 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/article/aticleService.dart';
 
 class Article extends StatefulWidget {
+  String id;
+  Article({this.id});
+
   @override
   _ArticleState createState() => _ArticleState();
 }
 
 class _ArticleState extends State<Article> {
+  Object articleData;
+
+  initDate() async {
+    var data = await new AricleService().getOneArticle(widget.id);
+    setState(() {
+      articleData = data;
+    });
+
+    print(data);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initDate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            child: Column(
-              children: [user(context), article(context)],
+            child: articleData == null ? Center(child: CircularProgressIndicator() ,):Column(
+              children: [
+                user(context, articleData),
+                article(context, articleData),
+              ],
             ),
           ),
         ),
@@ -24,7 +48,7 @@ class _ArticleState extends State<Article> {
 }
 
 /////////////////////////////////////////////////////////////////
-Widget user(context) {
+Widget user(context, articleData) {
   return Container(
     decoration: BoxDecoration(
       color: new ShareColors().bluegrayColor,
@@ -34,8 +58,8 @@ Widget user(context) {
         child: Column(
           children: [
             ListTile(
-                title: Text("Mohamed Tamer"),
-                subtitle: Text("2:30pm"),
+                title: Text("${articleData['userId']['name']} - ${articleData['userId']['description']}"),
+                subtitle: Text("${articleData['created']}"),
                 leading: CircleAvatar(
                   radius: 30,
                   backgroundImage: AssetImage('images/3.jpeg'),
@@ -51,7 +75,7 @@ Widget user(context) {
 }
 
 /////////////////////////////////////////////////////////////////
-Widget article(context) {
+Widget article(context,articleData) {
   return (Container(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +97,7 @@ Widget article(context) {
           height: 35,
           child: Center(
             child: Text(
-              "#Work",
+              "#${articleData['category']}",
               style: TextStyle(
                 color: new ShareColors().whiteColor,
                 fontSize: 15,
@@ -87,7 +111,7 @@ Widget article(context) {
       Padding(
         padding: EdgeInsets.all(5),
         child: Text(
-          "this is my problem and i solve it like this",
+          "${articleData['description']}",
           style: TextStyle(
               color: new ShareColors().whiteColor,
               fontSize: 25,
@@ -100,25 +124,27 @@ Widget article(context) {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  // border: Border.all(color: new ShareColors().whiteColor),
-                  // borderRadius: BorderRadius.circular(7),
-                ),
+                    // border: Border.all(color: new ShareColors().whiteColor),
+                    // borderRadius: BorderRadius.circular(7),
+                    ),
                 child: Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
-                      "Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph. A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long. Ultimately, a paragraph is a sentence or group of sentences that support one main idea. In this handout, we will refer to this as the “controlling idea,” because it controls what happens in the rest of the paragrap"),
+                      "${articleData['problem']}"),
                 ),
               ),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Container(
                 decoration: BoxDecoration(
-                  // border: Border.all(color: new ShareColors().whiteColor),
-                  // borderRadius: BorderRadius.circular(7),
-                ),
+                    // border: Border.all(color: new ShareColors().whiteColor),
+                    // borderRadius: BorderRadius.circular(7),
+                    ),
                 child: Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
-                      "Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph. A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long. Ultimately, a paragraph is a sentence or group of sentences that support one main idea. In this handout, we will refer to this as the “controlling idea,” because it controls what happens in the rest of the paragrap"),
+                      "${articleData['solution']}"),
                 ),
               ),
             ],

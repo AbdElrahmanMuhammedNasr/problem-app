@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/Home/homeService.dart';
 import 'package:flutter_main_app/addPost/add.dart';
 import 'package:flutter_main_app/article/article.dart';
 import 'package:flutter_main_app/author/author.dart';
@@ -11,79 +12,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> articles = [
-    {
-      "name": 'ادراه الوثت',
-      "time": "2:30 pm",
-      "snap": "مشكله اداره الوثت وحل المسشكه",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-    {
-      "name": 'management Money',
-      "time": "2:30 pm",
-      "snap": "this is taxk this is taxk this is taxk this is taxk",
-      "id": "ojfkdjfkdj",
-    },
-  ];
+
+  List articles = [];
+
+  initData() async{
+    var data = await new HomeService().getSomePost() ;
+    setState(() {
+      articles =  data;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-          child: SafeArea(
-                      child: Container(
-        child: SingleChildScrollView(
+      child: SafeArea(
+        child: Container(
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 main_bar(context),
-                Container(
-                  child: Column(
-                    children: articles.map((e) => article(context, e)).toList(),
-                  ),
-                ),
+                articles == null
+                    ? CircularProgressIndicator()
+                    : Container(
+                        child: Column(
+                            children: articles.map((e) => article(context, e)).toList(),
+                            ),
+                      ),
                 FlatButton(
-                  minWidth: MediaQuery.of(context).size.width /2,
+                  minWidth: MediaQuery.of(context).size.width / 2,
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {
@@ -93,9 +55,9 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
+          ),
         ),
       ),
-          ),
     );
   }
 }
@@ -141,7 +103,6 @@ Widget main_bar(context) {
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => new Add()));
-                            print("add");
                           }),
                       IconButton(
                           icon: Icon(Icons.person_sharp),
@@ -153,7 +114,6 @@ Widget main_bar(context) {
                                 builder: (context) => new Author(
                                       id: "fdkfjdkfjdkfjkdj",
                                     )));
-                            print("add");
                           })
                     ],
                   )
@@ -195,7 +155,7 @@ Widget article(context, articelData) {
             Align(
               alignment: _textAlign,
               child: Text(
-                "${articelData['name']}",
+                "${articelData['title']}",
                 style: TextStyle(
                   color: new ShareColors().whiteColor,
                   fontSize: 20,
@@ -207,7 +167,7 @@ Widget article(context, articelData) {
             ),
             Align(
               alignment: _textAlign,
-              child: Text("${articelData['time']}",
+              child: Text("${articelData['created']}",
                   style: TextStyle(
                     color: new ShareColors().grayColor,
                     fontSize: 10,
@@ -219,7 +179,7 @@ Widget article(context, articelData) {
             Align(
               alignment: _textAlign,
               child: Text(
-                "${articelData['snap']}",
+                "${articelData['description']}",
                 style: TextStyle(
                   color: new ShareColors().whiteColor,
                   fontSize: 15,
@@ -240,10 +200,10 @@ Widget article(context, articelData) {
                   textColor: Colors.white,
                   color: new ShareColors().lightbluegrayColor,
                   onPressed: () {
-                    print("go tot author " + articelData['id']);
+                    print("go tot author " + articelData['userId']);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => new Author(
-                              id: "tkjkjgfkjgfkjgkfjgf",
+                              id: articelData['userId'],
                             )));
                   },
                 ),
@@ -254,9 +214,9 @@ Widget article(context, articelData) {
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {
-                    print("read more " + articelData['id']);
+                    print("read more " + articelData['_id']);
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => new Article()));
+                        MaterialPageRoute(builder: (context) => new Article(id: articelData['_id'] ,)));
                   },
                 )
               ],

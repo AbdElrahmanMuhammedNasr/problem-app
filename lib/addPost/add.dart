@@ -8,9 +8,33 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
+  List<String> categories = [
+    'money',
+    'marr',
+    'kid',
+    'family',
+    'work',
+    'money1',
+    'marr1',
+    'kid1',
+    'family1',
+    'work1',
+    'money2',
+    'marr2',
+    'kid2',
+    'family2',
+    'work2'
+  ];
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Object _textAlign = TextAlign.left;
+
+  String _category = null;
+  String _title = null;
+  String _description = null;
+  String _problem = null;
+  String _solution = null;
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +66,47 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     Container(
-                        height: 50,
-                        //  this is shared category
-                        child: new Category()),
+                      height: 50,
+                      //  this is  category
+                      child: Container(
+                        color: new ShareColors().bluegrayColor,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: List.generate(
+                            categories.length,
+                            (index) => InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _category = categories[index];
+                                });
+                                print(categories[index]);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: _category != categories[index]
+                                        ? Colors.black12
+                                        : Colors.blue.shade700,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  width: 70,
+                                  child: Center(
+                                    child: Text(
+                                      "#${categories[index]}",
+                                      style: TextStyle(
+                                        color: new ShareColors().whiteColor,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     // end
                     SizedBox(
                       height: 35,
@@ -65,7 +127,9 @@ class _AddState extends State<Add> {
                                 : "عنوان",
                             border: InputBorder.none,
                           ),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            _title = val;
+                          },
                         ),
                       ),
                     ),
@@ -88,7 +152,9 @@ class _AddState extends State<Add> {
                                 : "وصف المشكله",
                             border: InputBorder.none,
                           ),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            _description = val;
+                          },
                         ),
                       ),
                     ),
@@ -112,7 +178,9 @@ class _AddState extends State<Add> {
                                 : "اكتب المشكله",
                             border: InputBorder.none,
                           ),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            _problem = val;
+                          },
                         ),
                       ),
                     ),
@@ -136,7 +204,9 @@ class _AddState extends State<Add> {
                                 : "الحل",
                             border: InputBorder.none,
                           ),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            _solution = val;
+                          },
                         ),
                       ),
                     ),
@@ -150,13 +220,20 @@ class _AddState extends State<Add> {
                           // height: 200,
                           color: new ShareColors().blueColor,
                           onPressed: () {
-                            print('add');
+                            _formKey.currentState.save();
+                            final post = {
+                              "category": _category,
+                              "title": _title,
+                              "description": _description,
+                              "problem": _problem,
+                              "solution": _solution,
+                            };
+
+                            print(post);
+                      
                           },
                           child: Text(
                               _textAlign == TextAlign.left ? 'Post' : "نشر ")),
-                    ),
-                    SizedBox(
-                      height: 25,
                     ),
                   ],
                 ),

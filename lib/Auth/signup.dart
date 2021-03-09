@@ -22,6 +22,7 @@ class _SignUpState extends State<SignUp> {
               padding: EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Align(
                       alignment: Alignment.centerLeft,
