@@ -4,7 +4,6 @@ import 'package:flutter_main_app/Home/homeService.dart';
 import 'package:flutter_main_app/addPost/add.dart';
 import 'package:flutter_main_app/article/article.dart';
 import 'package:flutter_main_app/author/author.dart';
-import 'package:flutter_main_app/sharedWidget/category.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,13 +11,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _category;
 
-  List articles = [];
+  List<String> categories = ['money', 'work', 'marraid', 'home','money', 'work', 'marraid', 'home'];
 
-  initData() async{
-    var data = await new HomeService().getSomePost() ;
+  List articles;
+
+  initData() async {
     setState(() {
-      articles =  data;
+      articles = null;
+    });
+    var data;
+    if (_category == null) {
+      data = await new HomeService().getSomePost();
+    } else {
+      data = await new HomeService().getSomePostUsingCatgory(_category);
+    }
+    setState(() {
+      articles = data;
     });
   }
 
@@ -36,20 +46,124 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                main_bar(context),
+                // main bar
+                Container(
+                    color: new ShareColors().bluegrayColor,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Society problems",
+                                  style: TextStyle(
+                                      color: new ShareColors().blueColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        icon: Icon(Icons.add),
+                                        iconSize: 30,
+                                        tooltip: 'Add new Experiment',
+                                        color: new ShareColors().blueColor,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      new Add()));
+                                        }),
+                                    IconButton(
+                                        icon: Icon(Icons.person_sharp),
+                                        iconSize: 30,
+                                        tooltip: 'Go to profile',
+                                        color: new ShareColors().blueColor,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => new Author(
+                                                id: "fdkfjdkfjdkfjkdj",
+                                              ),
+                                            ),
+                                          );
+                                        })
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(
+                            height: 40,
+                            child: Container(
+                              color: new ShareColors().bluegrayColor,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: List.generate(
+                                  categories.length,
+                                  (index) => InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _category = categories[index];
+                                      });
+                                      initData();
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: _category != categories[index]
+                                              ? Colors.black12
+                                              : Colors.blue.shade700,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        width: 70,
+                                        child: Center(
+                                          child: Text(
+                                            "#${categories[index]}",
+                                            style: TextStyle(
+                                              color:
+                                                  new ShareColors().whiteColor,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                // end bar
                 articles == null
                     ? CircularProgressIndicator()
                     : Container(
                         child: Column(
-                            children: articles.map((e) => article(context, e)).toList(),
-                            ),
+                          children:
+                              articles.map((e) => article(context, e)).toList(),
+                        ),
                       ),
                 FlatButton(
                   minWidth: MediaQuery.of(context).size.width / 2,
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () {
-                    print('more');
+                    initData();
                   },
                   child: Text('More'),
                 )
@@ -60,78 +174,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-// ////////////////////////////////////////////////////////////////
-
-// ignore: non_constant_identifier_names
-Widget main_bar(context) {
-  return Container(
-      color: new ShareColors().bluegrayColor,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 7,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Society problems",
-                    style: TextStyle(
-                        color: new ShareColors().blueColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  // FlatButton.icon(
-                  //   onPressed: () {},
-                  //   icon: Icon(Icons.add),
-                  //   label: Text("Add"),
-                  //   color: new ShareColors().blueColor,
-                  // )
-
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.add),
-                          iconSize: 30,
-                          tooltip: 'Add new Experiment',
-                          color: new ShareColors().blueColor,
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => new Add()));
-                          }),
-                      IconButton(
-                          icon: Icon(Icons.person_sharp),
-                          iconSize: 30,
-                          tooltip: 'Go to profile',
-                          color: new ShareColors().blueColor,
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => new Author(
-                                      id: "fdkfjdkfjdkfjkdj",
-                                    )));
-                          })
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Container(
-                height: 40,
-                // sheard category
-                child: new Category()
-                // end
-                ),
-          ),
-        ],
-      ));
 }
 
 ////////////////////// part two the artical ////////////////
@@ -215,8 +257,10 @@ Widget article(context, articelData) {
                   color: Colors.blue,
                   onPressed: () {
                     // print("read more " + articelData['_id']);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => new Article(id: articelData['_id'] ,)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => new Article(
+                              id: articelData['_id'],
+                            )));
                   },
                 )
               ],
@@ -227,27 +271,3 @@ Widget article(context, articelData) {
     )),
   );
 }
-
-// Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 5),
-//             child: Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.black12,
-//                 borderRadius: BorderRadius.circular(1),
-//               ),
-//               child: Padding(
-//                 padding: EdgeInsets.all(1),
-//                 child: TextFormField(
-//                   keyboardType: TextInputType.number,
-//                   decoration: InputDecoration(
-//                     hintText: "  Search",
-//                     border: InputBorder.none,
-//                     prefixIcon: Icon(Icons.search),
-//                   ),
-//                   onSaved: (val) {
-//                     _search = val;
-//                   },
-//                 ),
-//               ),
-//             ),
-// ),

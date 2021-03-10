@@ -18,7 +18,6 @@ class _ArticleState extends State<Article> {
     setState(() {
       articleData = data;
     });
-
   }
 
   @override
@@ -33,12 +32,16 @@ class _ArticleState extends State<Article> {
       child: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            child: articleData == null ? Center(child: CircularProgressIndicator(),):Column(
-              children: [
-                user(context, articleData),
-                article(context, articleData),
-              ],
-            ),
+            child: articleData == null
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Column(
+                    children: [
+                      user(context, articleData),
+                      article(context, articleData),
+                    ],
+                  ),
           ),
         ),
       ),
@@ -57,7 +60,8 @@ Widget user(context, articleData) {
         child: Column(
           children: [
             ListTile(
-                title: Text("${articleData['userId']['name']} - ${articleData['userId']['description']}"),
+                title: Text(
+                    "${articleData['userId']['name']} - ${articleData['userId']['description']}"),
                 subtitle: Text("${articleData['created']}"),
                 leading: CircleAvatar(
                   radius: 30,
@@ -74,39 +78,59 @@ Widget user(context, articleData) {
 }
 
 /////////////////////////////////////////////////////////////////
-Widget article(context,articleData) {
+Widget article(context, articleData) {
   return (Container(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Padding(
         padding: EdgeInsets.symmetric(vertical: 0),
-        child: Image.asset('./images/2.jpeg'),
+        child: Container(
+          color: Colors.yellow,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: Image.asset('./images/2.jpeg',fit: BoxFit.fill,),
+        ),
       ),
 
 // add post category
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.blue.shade700,
-            borderRadius: BorderRadius.circular(7),
-          ),
-          width: 70,
-          height: 35,
-          child: Center(
-            child: Text(
-              "#${articleData['category']}",
-              style: TextStyle(
-                color: new ShareColors().whiteColor,
-                fontSize: 15,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blue.shade700,
+                borderRadius: BorderRadius.circular(7),
+              ),
+              width: 70,
+              height: 35,
+              child: Center(
+                child: Text(
+                  "#${articleData['category']}",
+                  style: TextStyle(
+                    color: new ShareColors().whiteColor,
+                    fontSize: 15,
+                  ),
+                ),
               ),
             ),
-          ),
+            Container(
+              child: FlatButton.icon(
+                  color: Colors.blue.shade700,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  onPressed: () {
+                    print('comment');
+                  },
+                  icon: Icon(Icons.messenger),
+                  label: Text('comments')),
+            ),
+          ],
         ),
       ),
       // end post category
-
       Padding(
         padding: EdgeInsets.all(5),
         child: Text(
@@ -117,6 +141,9 @@ Widget article(context,articleData) {
               fontWeight: FontWeight.bold),
         ),
       ),
+
+      Divider(),
+
       Padding(
           padding: EdgeInsets.all(2),
           child: Column(
@@ -128,8 +155,7 @@ Widget article(context,articleData) {
                     ),
                 child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: Text(
-                      "${articleData['problem']}"),
+                  child: Text("${articleData['problem']}"),
                 ),
               ),
               SizedBox(
@@ -142,8 +168,7 @@ Widget article(context,articleData) {
                     ),
                 child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: Text(
-                      "${articleData['solution']}"),
+                  child: Text("${articleData['solution']}"),
                 ),
               ),
             ],

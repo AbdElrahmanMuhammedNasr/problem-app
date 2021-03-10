@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/Home/HomePage.dart';
 
 class Category extends StatefulWidget {
   @override
@@ -42,6 +43,8 @@ class _CategoryState extends State<Category> {
                 setState(() {
                   _click = categories[index];
                 });
+
+                // new HomePage
                 print(categories[index]);
               },
               child: Padding(
