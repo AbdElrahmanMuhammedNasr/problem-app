@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_main_app/Auth/login.dart';
 import 'package:flutter_main_app/Color/color.dart';
 import 'package:flutter_main_app/Home/HomePage.dart';
 
@@ -117,7 +118,7 @@ class _SignUpState extends State<SignUp> {
                           SizedBox(
                             height: 35,
                           ),
-                            Container(
+                          Container(
                             decoration: BoxDecoration(
                               color: Colors.black12,
                               borderRadius: BorderRadius.circular(3),
@@ -200,7 +201,13 @@ class _SignUpState extends State<SignUp> {
                               print('signUp');
                             },
                             child: Text("Sign up"),
-                          )
+                          ),
+                          IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => new Login()));
+                              })
                         ],
                       ),
                     ),
