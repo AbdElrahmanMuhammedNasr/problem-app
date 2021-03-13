@@ -11,9 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _category;
+  String _category= 'All';
 
-  List<String> categories = ['money', 'work', 'marraid', 'home','money', 'work', 'marraid', 'home'];
+  List<String> categories = ['All','money', 'work', 'marraid', 'home','money', 'work', 'marraid', 'home'];
 
   List articles;
 
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       articles = null;
     });
     var data;
-    if (_category == null) {
+    if (_category == 'All') {
       data = await new HomeService().getSomePost();
     } else {
       data = await new HomeService().getSomePostUsingCatgory(_category);

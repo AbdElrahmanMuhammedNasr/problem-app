@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/addPost/addService.dart';
 import 'package:flutter_main_app/sharedWidget/category.dart';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class Add extends StatefulWidget {
   @override
@@ -10,23 +13,18 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   List<String> categories = [
     'money',
-    'marr',
-    'kid',
-    'family',
     'work',
-    'money1',
-    'marr1',
-    'kid1',
-    'family1',
-    'work1',
-    'money2',
-    'marr2',
-    'kid2',
-    'family2',
-    'work2'
+    'marraid',
+    'home',
+    'money',
+    'work',
+    'marraid',
+    'home'
   ];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool addSuccess = false;
 
   Object _textAlign = TextAlign.left;
 
@@ -51,7 +49,7 @@ class _AddState extends State<Add> {
                   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SizedBox(
-                      height: 35,
+                      height: 5,
                     ),
                     Align(
                       alignment: Alignment.topLeft,
@@ -66,7 +64,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     Container(
-                      height: 50,
+                      height: 45,
                       //  this is  category
                       child: Container(
                         color: new ShareColors().bluegrayColor,
@@ -108,8 +106,26 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     // end
+                    // if post add succcess
+                    addSuccess
+                        ? Container(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  child: Text('Add new Post success'),
+                                )
+                              ],
+                            ),
+                          )
+                        : Text(''),
+
+                    // if post add succcess
+
                     SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -134,7 +150,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -159,7 +175,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -185,7 +201,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -211,7 +227,7 @@ class _AddState extends State<Add> {
                       ),
                     ),
                     SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     Container(
                       child: FlatButton(
@@ -221,16 +237,22 @@ class _AddState extends State<Add> {
                           color: new ShareColors().blueColor,
                           onPressed: () {
                             _formKey.currentState.save();
-                            final post = {
+
+                            final article = {
+                              "userId": '6047c690d64ec21f34bdf922',
                               "category": _category,
                               "title": _title,
                               "description": _description,
                               "problem": _problem,
                               "solution": _solution,
                             };
+                            Future<bool> response =
+                                new AddService().addNewpost(article);
 
-                            print(post);
-                      
+                            response.then((value) => setState(() {
+                                  addSuccess = value;
+                                }));
+                            // print(response);
                           },
                           child: Text(
                               _textAlign == TextAlign.left ? 'Post' : "نشر ")),

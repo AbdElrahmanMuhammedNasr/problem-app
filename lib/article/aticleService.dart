@@ -5,13 +5,13 @@ import 'dart:convert';
 
 class AricleService {
 
-  // ignore: missing_return
   Future <Object> getOneArticle(String id) async{
     http.Response futurePost = await http.get(new Api().BASE_URL+"/post/getPost/"+id);
      if(futurePost.statusCode == 200){
       return json.decode(futurePost.body);
     }else{
       print("Error");
+      return null;
     }
 
   }
