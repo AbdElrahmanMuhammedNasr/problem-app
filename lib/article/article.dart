@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
+import 'package:flutter_main_app/Comments/commemt.dart';
 import 'package:flutter_main_app/article/aticleService.dart';
 
 class Article extends StatefulWidget {
@@ -122,7 +123,7 @@ Widget article(context, articleData) {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)),
                   onPressed: () {
-                    print('comment');
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> new Comment(postId: articleData['_id'],)));
                   },
                   icon: Icon(Icons.messenger),
                   label: Text('comments')),

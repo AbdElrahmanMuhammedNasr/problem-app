@@ -39,11 +39,11 @@ class _AuthorState extends State<Author> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: Material(
+      body: Material(
         child: SafeArea(
           child: SingleChildScrollView(
             child: Center(
-                          child: Container(
+              child: Container(
                 child: Column(
                   children: [
                     userData == null
@@ -60,8 +60,8 @@ class _AuthorState extends State<Author> {
                                     fontWeight: FontWeight.bold, fontSize: 23),
                               ),
                               Text("Posts",
-                                  style:
-                                      TextStyle(color: new ShareColors().grayColor))
+                                  style: TextStyle(
+                                      color: new ShareColors().grayColor))
                             ],
                           ),
                     // ///////////////////////////////////////////
@@ -81,18 +81,17 @@ class _AuthorState extends State<Author> {
             ),
           ),
         ),
-        
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: new ShareColors().blueColor,
         foregroundColor: new ShareColors().whiteColor,
         child: Icon(Icons.settings),
-        onPressed: (){
+        onPressed: () {
           print("object");
         },
-        ),
-        bottomNavigationBar: BottomAppBar(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
+      bottomNavigationBar: BottomAppBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
@@ -180,11 +179,28 @@ Widget article(context, articelData) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${articelData['title']}",
-              style: TextStyle(
-                color: new ShareColors().whiteColor,
-                fontSize: 20,
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${articelData['title']}",
+                    style: TextStyle(
+                      color: new ShareColors().whiteColor,
+                      fontSize: 20,
+                    ),
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        Future<bool> deleted =
+                            new AutherService().deletePost(articelData['_id']);
+                        deleted.then((value) => print('delete response is $value'));
+                      })
+                ],
               ),
             ),
             SizedBox(

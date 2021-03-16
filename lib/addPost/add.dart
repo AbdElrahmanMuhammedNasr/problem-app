@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_main_app/Color/color.dart';
 import 'package:flutter_main_app/addPost/addService.dart';
-import 'package:flutter_main_app/sharedWidget/category.dart';
-import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
+
 
 class Add extends StatefulWidget {
   @override
@@ -16,10 +14,8 @@ class _AddState extends State<Add> {
     'work',
     'marraid',
     'home',
-    'money',
-    'work',
-    'marraid',
-    'home'
+    'study',
+   
   ];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

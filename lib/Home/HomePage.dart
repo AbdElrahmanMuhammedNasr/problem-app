@@ -11,9 +11,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _category= 'All';
+  String _category = 'All';
 
-  List<String> categories = ['All','money', 'work', 'marraid', 'home','money', 'work', 'marraid', 'home'];
+  List<String> categories = [
+    'All',
+    'money',
+    'work',
+    'marraid',
+    'home',
+    'study',
+  ];
 
   List articles;
 
